@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Valentine's Day Surprise</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1, #ff1493); /* Vibrant pink gradient for liveliness */
+            color: #ffffff; /* White text for contrast */
+            padding: 50px;
+            overflow: hidden; /* Hide overflow for floating hearts */
+            position: relative;
+            min-height: 100vh; /* Ensure full height for random positioning */
+        }
+        /* Floating hearts for liveliness - increased number and speed */
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff1493;
+            animation: float 4s infinite linear; /* Faster animation */
+            opacity: 0.8;
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        h1 {
+            font-size: 2em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+        button {
+            font-size: 1.2em;
+            padding: 10px 20px;
+            margin: 10px;
+            border: 2px solid #ff69b4; /* Pink outline border */
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s ease; /* Smooth transitions */
+            position: relative; /* For absolute positioning later */
+            background: linear-gradient(to right, #007bff, #ff69b4); /* Blue with hint of pink gradient */
+            color: white;
+            box-shadow: 0 0 10px #ff69b4; /* Pink glow */
+        }
+        button:hover {
+            box-shadow: 0 0 20px #ff69b4, 0 0 30px #ff69b4; /* Stronger pink glow on hover */
+        }
+         yesBtn {
+            /* Inherits from button */
+        }
+        #noBtn {
+            background: linear-gradient(to right, #007bff, #ff69b4); /* Blue with hint of pink gradient */
+            color: white;
+            position: absolute; /* Allow random positioning */
+            transition: all 0.5s ease; /* Smoother movement */
+            /* Glow already in button class */
+        }
+        #backBtn {
+            background: #ff69b4; /* Pink background for back button */
+            color: white;
+            margin-top: 20px;
+        }
+        #nextBtn {
+            background: #ff69b4; /* Pink background for next button */
+            color: white;
+            margin-top: 20px;
+        }
+        #yayMessage {
+            display: none;
+            font-size: 1.5em;
+            color: #ff1493;
+            margin-top: 20px;
+            animation: fadeIn 1s ease-in;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        #nextPage {
+            display: none;
+            margin-top: 50px;
+            animation: slideIn 1s ease-in;
+            max-height: 80vh; /* Limit height to 80% of viewport */
+            overflow-y: auto; /* Add vertical scrolling if content overflows */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        #thirdPage {
+            display: none;
+            margin-top: 50px;
+            animation: slideIn 1s ease-in;
+            max-height: 80vh; /* Adjusted to 80vh for consistency with nextPage */
+            overflow-y: auto; /* Add vertical scrolling if content overflows */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+        @keyframes slideIn {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+        .imageContainer {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .valentineImage { /* Changed to class for consistency and smaller size */
+            max-width: 200px; /* Kept as 200px as in your code */
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            cursor: pointer; /* Indicate clickable */
+        }
+        /* Adjusted layout for second page: left images, message in center, right images, then bottom images */
+        .nextPageLayout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .topRow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+        }
+        .surroundImages {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .surroundImages .valentineImage {
+            max-width: 80px; /* Smaller for surrounding boxes */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff69b4; /* Pink glow effect */
+            transition: box-shadow 0.3s ease;
+        }
+        .surroundImages .valentineImage:hover {
+            box-shadow: 0 0 20px #ff69b4, 0 0 30px #ff69b4; /* Stronger glow on hover */
+        }
+        .message {
+            text-align: center;
+            flex: 1; /* Take up available space in the center */
+            max-width: 400px; /* Limit width to keep it centered and not too wide */
+        }
+        .bottomImages {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .bottomImages .valentineImage {
+            max-width: 150px; /* Medium size for bottom */
+            height: auto;
+            box-shadow: 0 0 10px #ff69b4; /* Pink glow */
+        }
+        .bottomImages .valentineImage:hover {
+            box-shadow: 0 0 20px #ff69b4, 0 0 30px #ff69b4; /* Stronger glow */
+        }
+        /* Layout for third page - similar to second page */
+        .thirdPageLayout {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .thirdTopRow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            gap: 20px;
+        }
+        .thirdSurroundImages {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .thirdSurroundImages .valentineImage {
+            max-width: 80px; /* Smaller for surrounding boxes */
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 0 10px #ff69b4; /* Pink glow effect */
+            transition: box-shadow 0.3s ease;
+        }
+        .thirdSurroundImages .valentineImage:hover {
+            box-shadow: 0 0 20px #ff69b4, 0 0 30px #ff69b4; /* Stronger glow */
+        }
+        .thirdMessage {
+            text-align: center;
+            flex: 1; /* Take up available space in the center */
+            max-width: 400px; /* Limit width to keep it centered and not too wide */
+        }
+        /* Modal for viewing images */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.9);
+            padding-top: 60px;
+        }
+        .modal-content {
+            margin: auto;
+            display: block;
+            width: 80%;
+            max-width: 700px;
+        }
+        .modal-content img {
+            width: 100%;
+            height: auto;
+        }
+        .close {
+            position: absolute;
+            top: 15px;
+            right: 35px;
+            color: #f1f1f1;
+            font-size: 40px;
+            font-weight: bold;
+            transition: 0.3s;
+            cursor: pointer;
+        }
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -50px;
+            color: white;
+            font-weight: bold;
+            font-size: 20px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            -webkit-user-select: none;
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+<body>
+    <audio id="memeSound" src="music/meme4.mp3" preload="auto"></audio>
+    <audio id="yesSound" src="music/meme5.mp3" preload="auto"></audio>
+    <audio id="bgSound" src="music/bg1.mp3" preload="auto" loop></audio>
+
+    <div class="heart" style="left: 5%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="left: 15%; animation-delay: 0.5s;">💖</div>
+    <div class="heart" style="left: 25%; animation-delay: 1s;">💕</div>
+    <div class="heart" style="left: 35%; animation-delay: 1.5s;">❤️</div>
+    <div class="heart" style="left: 45%; animation-delay: 2s;">💖</div>
+    <div class="heart" style="left: 55%; animation-delay: 2.5s;">💕</div>
+    <div class="heart" style="left: 65%; animation-delay: 3s;">❤️</div>
+    <div class="heart" style="left: 75%; animation-delay: 3.5s;">💖</div>
+    <div class="heart" style="left: 85%; animation-delay: 4s;">💕</div>
+    <div class="heart" style="left: 95%; animation-delay: 4.5s;">❤️</div>
+    <div class="heart" style="left: 10%; animation-delay: 5s;">💖</div>
+    <div class="heart" style="left: 20%; animation-delay: 5.5s;">💕</div>
+    <div class="heart" style="left: 30%; animation-delay: 6s;">❤️</div>
+    <div class="heart" style="left: 40%; animation-delay: 6.5s;">💖</div>
+    <div class="heart" style="left: 50%; animation-delay: 7s;">💕</div>
+    <div class="heart" style="left: 60%; animation-delay: 7.5s;">❤️</div>
+    <div class="heart" style="left: 70%; animation-delay: 8s;">💖</div>
+    <div class="heart" style="left: 80%; animation-delay: 8.5s;">💕</div>
+    <div class="heart" style="left: 90%; animation-delay: 9s;">❤️</div>
+
+    <div id="firstPage">
+        <h1>valentines message for my lovelove!💖</h1>
+        <p>wanna be my valentines baby??💖😍</p>
+        <div class="imageContainer">
+            <img class="valentineImage" src="images/cat1.jpg" alt="Valentine's Day Image 1 on First Page">
+            <img class="valentineImage" src="images/cat2.jpg" alt="Valentine's Day Image 2 on First Page">
+        </div>
+        <button id="yesBtn">yes! 😍</button>
+        <button id="noBtn">no 😒</button>
+        <div id="yayMessage">yayyyyy!! i knew it mag yyes ikaw eheehe loveuuu!!😍😍 🎉</div>
+    </div>
+
+    <div id="nextPage">
+        <div class="nextPageLayout">
+            <div class="topRow">
+                <div class="surroundImages">
+                    <img class="valentineImage" src="images/baby1.jpg" alt="Valentine's Day Image 1"
+onclick="openModal('images/baby1.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+<img class="valentineImage" src="images/baby2.jpg" alt="Valentine's Day Image 2"
+onclick="openModal('images/baby2.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+<img class="valentineImage" src="images/baby3.jpg" alt="Valentine's Day Image 3"
+onclick="openModal('images/baby3.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+                </div>
+                <div class="message">
+                    <h1>YAYYYY HAPPY VALENTINES MY MALDITAAAA!!!❤️</h1>
+                    <p>thank you so much babyyy kasi kahit ganyan ka, kahit ganto ako, nandyan ka pa rin palagi para sakin. sobra kitang naaappreciate sa lahat ng pag-intindi mo, sa patience mo, at sa love na binibigay mo kahit minsan ang hirap kong intindihin. pasensya na talaga baby sa mga pagkukulang ko at sa mga times na nasasaktan kita, hindi ko man laging nasasabi pero sobrang thankful ako na ikaw yung kasama ko.
+
+happy valentine’s day baby!! sana magtagal pa tayo, sana malagpasan natin lahat ng challenges na darating, at sana mas lalo pa tayong maging strong together. i promise na mas pagbubutihin ko pa, mas aalagaan pa kita at yung relationship natin.
+
+i love you so much babyyy, forever na sana tayo ❤️
+</p>
+                </div>
+                <div class="surroundImages">
+                    <img class="valentineImage" src="images/baby4.jpg" alt="Valentine's Day Image 4"
+     onclick="openModal('images/baby4.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+<img class="valentineImage" src="images/baby5.jpg" alt="Valentine's Day Image 5"
+     onclick="openModal('images/baby5.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+<img class="valentineImage" src="images/baby6.jpg" alt="Valentine's Day Image 6"
+     onclick="openModal('images/baby6.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+                </div>
+            </div>
+            <div class="bottomImages">
+                <img class="valentineImage" src="images/cat3.jpg" alt="Valentine's Day Image 8"
+     onclick="openModal('images/cat3.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+<img class="valentineImage" src="images/cat4.jpg" alt="Valentine's Day Image 9"
+     onclick="openModal('images/cat4.jpg', ['images/baby1.jpg','images/baby2.jpg','images/baby3.jpg','images/baby4.jpg','images/baby5.jpg','images/baby6.jpg','images/cat3.jpg','images/cat4.jpg'])">
+
+            </div>
+            <button id="nextBtn">Next Page</button>
+            <button id="backBtn">Back to First Page</button>
+        </div>
+    </div>
+
+    <div id="thirdPage">
+        <div class="thirdPageLayout">
+            <div class="thirdTopRow">
+                <div class="thirdSurroundImages">
+                    <img class="valentineImage" src="images/us1.jpg" alt="Us Image 1"
+     onclick="openModal('images/us1.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us2.jpg" alt="Us Image 2"
+     onclick="openModal('images/us2.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us3.jpg" alt="Us Image 3"
+     onclick="openModal('images/us3.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us4.jpg" alt="Us Image 4"
+     onclick="openModal('images/us4.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us5.jpg" alt="Us Image 5"
+     onclick="openModal('images/us5.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us6.jpg" alt="Us Image 6"
+     onclick="openModal('images/us6.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us7.jpg" alt="Us Image 7"
+     onclick="openModal('images/us7.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us8.jpg" alt="Us Image 8"
+     onclick="openModal('images/us8.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us9.jpg" alt="Us Image 9"
+     onclick="openModal('images/us9.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+<img class="valentineImage" src="images/us10.jpg" alt="Us Image 10"
+     onclick="openModal('images/us10.jpg', ['images/us1.jpg','images/us2.jpg','images/us3.jpg','images/us4.jpg','images/us5.jpg','images/us6.jpg','images/us7.jpg','images/us8.jpg','images/us9.jpg','images/us10.jpg'])">
+
+                </div>
+                <div class="thirdMessage">
+                    <h1>i love you so much baby!!❤️</h1>
+                    <p>Thank you for being the best thing that ever happened to me. Sobrang grateful ako sa every moment na sineshare natin together kahit miles apart tayo sa bawat tawag, tawanan, at kahit sa kisses na sa screen lang muna. You still make my life brighter and happier in ways no one else can. Distance may keep us far from each other, pero hindi nun mababago kung gaano kita kamahal. I can’t imagine my future without you in it, and I promise to always love you, support you, and stay by your side through everything, no matter how far we are. happy valentines day my love. ❤️</p>
+                </div>
+            </div>
+            <button const backToSecondBtn = document.getElementById('backToSecondBtn'); id="backToSecondBtn">Back to Second Page</button>
+        </div>
+    </div>
+    <div>
+        <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <span class="prev" onclick="changeImage(-1)">❮</span>
+    <img class="modal-content" id="modalImage">
+    <span class="next" onclick="changeImage(1)">❯</span>
+</div>
+
+
+
+    <script>
+        let currentImages = [];
+let currentIndex = 0;
+
+function openModal(src, imageArray) {
+    modal.style.display = "block";
+    modalImage.src = src;
+
+    currentImages = imageArray;
+    currentIndex = currentImages.indexOf(src);
+}
+
+function closeModal() {
+    modal.style.display = "none";
+}
+
+function changeImage(direction) {
+    currentIndex += direction;
+
+    if (currentIndex < 0) {
+        currentIndex = currentImages.length - 1;
+    }
+
+    if (currentIndex >= currentImages.length) {
+        currentIndex = 0;
+    }
+
+    modalImage.src = currentImages[currentIndex];
+}
+        const yesBtn = document.getElementById('yesBtn');
+        const noBtn = document.getElementById('noBtn');
+        const backBtn = document.getElementById('backBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const backToSecondBtn = document.getElementById('backToSecondBtn');
+        const yayMessage = document.getElementById('yayMessage');
+        const firstPage = document.getElementById('firstPage');
+        const nextPage = document.getElementById('nextPage');
+        const thirdPage = document.getElementById('thirdPage');
+        const memeSound = document.getElementById('memeSound');
+        const yesSound = document.getElementById('yesSound');
+        const bgSound = document.getElementById('bgSound');
+        const modal = document.getElementById('imageModal');
+        const modalImage = document.getElementById('modalImage');
+
+        function teleportNoBtn(event) {
+            const rect = noBtn.getBoundingClientRect();
+            const centerX = rect.left + rect.width / 2;
+            const centerY = rect.top + rect.height / 2;
+            let pointerX, pointerY;
+
+            if (event) {
+                if (event.type === 'mouseenter') {
+                    pointerX = event.clientX;
+                    pointerY = event.clientY;
+                } else if (event.type === 'touchstart') {
+                    pointerX = event.touches[0].clientX;
+                    pointerY = event.touches[0].clientY;
+                }
+                // Calculate direction away from pointer
+                const deltaX = centerX - pointerX;
+                const deltaY = centerY - pointerY;
+                const distance = Math.sqrt(deltaX * deltaX + deltaY * deltaY);
+                if (distance > 0) {
+                    const moveX = (deltaX / distance) * 200; // Move 200px away
+                    const moveY = (deltaY / distance) * 200;
+                    const newX = Math.max(0, Math.min(window.innerWidth - noBtn.offsetWidth, centerX + moveX));
+                    const newY = Math.max(0, Math.min(window.innerHeight - noBtn.offsetHeight, centerY + moveY));
+                    noBtn.style.left = `${newX}px`;
+                    noBtn.style.top = `${newY}px`;
+                }
+            } else {
+                // Random for click
+                const screenWidth = window.innerWidth - noBtn.offsetWidth;
+                const screenHeight = window.innerHeight - noBtn.offsetHeight;
+                const randomX = Math.random() * screenWidth;
+                const randomY = Math.random() * screenHeight;
+                noBtn.style.left = `${randomX}px`;
+                noBtn.style.top = `${randomY}px`;
+            }
+            memeSound.currentTime = 0;
+            memeSound.play();
+        }
+
+        noBtn.addEventListener('mouseenter', teleportNoBtn);
+        noBtn.addEventListener('touchstart', function(event) {
+            event.preventDefault();
+            teleportNoBtn(event);
+        });
+        noBtn.addEventListener('click', function() {
+            teleportNoBtn(); // Random move for click
+        });
+
+        yesBtn.addEventListener('click', function() {
+            yesSound.currentTime = 0;
+            yesSound.play();
+            yayMessage.style.display = 'block';
+            setTimeout(function() {
+                firstPage.style.display = 'none';
+                nextPage.style.display = 'block';
+                memeSound.pause();
+                memeSound.currentTime = 0;
+                bgSound.currentTime = 0;
+                bgSound.play();
+            }, 2000);
+        });
+
+        nextBtn.addEventListener('click', function() {
+            nextPage.style.display = 'none';
+            thirdPage.style.display = 'block';
+            // Background music continues
+        });
+
+        backBtn.addEventListener('click', function() {
+            nextPage.style.display = 'none';
+            firstPage.style.display = 'block';
+            yayMessage.style.display = 'none';
+            bgSound.pause();
+            bgSound.currentTime = 0;
+        });
+
+        backToSecondBtn.addEventListener('click', function() {
+            thirdPage.style.display = 'none';
+            nextPage.style.display = 'block';
+        });
+    </script>
+</body>
+</html>

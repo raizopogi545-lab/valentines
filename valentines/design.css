@@ -1,0 +1,265 @@
+body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background: linear-gradient(45deg, #ff69b4, #ffb6c1, #ff1493, #ff69b4);
+            background-size: 400% 400%;
+            animation: gradientShift 10s ease infinite; /* Shifting gradient for dynamism */
+            color: #ffffff; /* White text for contrast */
+            padding: 50px;
+            overflow: hidden; /* Hide overflow for floating hearts */
+            position: relative;
+            min-height: 100vh; /* Ensure full height for random positioning */
+        }
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating Hearts: Mas maraming hearts with random colors and sizes */
+        .heart {
+            position: absolute;
+            font-size: 2em;
+            color: #ff1493;
+            animation: float 4s infinite linear, pulse 2s infinite; /* Added pulse for heartbeat effect */
+            opacity: 0.8;
+            z-index: -1; /* Behind content */
+        }
+        @keyframes float {
+            0% { transform: translateY(100vh) rotate(0deg); }
+            100% { transform: translateY(-100px) rotate(360deg); }
+        }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        /* H1 Enhancements: Mas magandang text shadow at glow */
+        h1 {
+            font-size: 2.5em; /* Slightly larger */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px #ff69b4; /* Added glow */
+            animation: textGlow 3s ease-in-out infinite alternate; /* Pulsing glow */
+        }
+        @keyframes textGlow {
+            from { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 20px #ff69b4; }
+            to { text-shadow: 2px 2px 4px rgba(0,0,0,0.5), 0 0 30px #ff1493; }
+        }
+
+        /* Button Enhancements: Mas magandang gradient, shadow, at hover effects */
+        button {
+            font-size: 1.2em;
+            padding: 15px 25px; /* Larger padding */
+            margin: 15px;
+            border: 3px solid #ff69b4; /* Thicker border */
+            border-radius: 10px; /* More rounded */
+            cursor: pointer;
+            transition: all 0.4s ease; /* Smoother transitions */
+            position: relative; /* For absolute positioning later */
+            background: linear-gradient(45deg, #007bff, #ff69b4, #ff1493); /* Multi-color gradient */
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 105, 180, 0.5); /* Soft shadow */
+            text-transform: uppercase; /* Uppercase text */
+            font-weight: bold;
+        }
+        button:hover {
+            box-shadow: 0 6px 25px rgba(255, 105, 180, 0.8), 0 0 30px #ff69b4; /* Stronger glow and lift */
+            transform: translateY(-3px) scale(1.05); /* Lift and scale on hover */
+        }
+        button:active {
+            transform: translateY(0) scale(1); /* Press effect */
+        }
+
+        /* Specific for No Button: Extra evasion animation */
+        #noBtn {
+            background: linear-gradient(45deg, #007bff, #ff69b4, #ff1493);
+            color: white;
+            position: absolute; /* Allow random positioning */
+            transition: all 0.6s ease; /* Smoother movement */
+            animation: wiggle 1s infinite; /* Subtle wiggle when idle */
+        }
+        @keyframes wiggle {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-2deg); }
+            75% { transform: rotate(2deg); }
+        }
+
+        /* Yay Message: Mas magandang fade-in with bounce */
+        #yayMessage {
+            display: none;
+            font-size: 1.8em;
+            color: #ff1493;
+            margin-top: 30px;
+            animation: fadeInBounce 1s ease-in;
+            text-shadow: 0 0 10px #ff69b4;
+        }
+        @keyframes fadeInBounce {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.1); }
+            100% { opacity: 1; transform: scale(1); }
+        }
+
+        /* Page Transitions: Mas smooth na slide-in with fade */
+        #nextPage, #thirdPage {
+            display: none;
+            margin-top: 50px;
+            animation: slideInFade 1.5s ease-in;
+            max-height: 80vh; /* Limit height to 80% of viewport */
+            overflow-y: auto; /* Add vertical scrolling if content overflows */
+            padding: 30px;
+            box-sizing: border-box;
+            background: rgba(255, 255, 255, 0.1); /* Subtle background overlay */
+            border-radius: 20px; /* Rounded corners */
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3); /* Deep shadow */
+        }
+        @keyframes slideInFade {
+            from { transform: translateY(50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Image Containers: Mas magandang layout with hover zoom */
+        .imageContainer, .bottomImages, .thirdImages {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 25px;
+            margin-top: 30px;
+        }
+        .valentineImage {
+            max-width: 200px;
+            height: auto;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .valentineImage:hover {
+            transform: scale(1.1); /* Zoom on hover */
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.6);
+        }
+
+        /* Surround Images: Extra glow and rotation on hover */
+        .surroundImages .valentineImage {
+            max-width: 80px;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #ff69b4;
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+        .surroundImages .valentineImage:hover {
+            box-shadow: 0 0 30px #ff69b4, 0 0 40px #ff1493;
+            transform: rotate(5deg) scale(1.1); /* Slight rotation and scale */
+        }
+
+        /* Third Page Grid: Mas responsive at maganda */
+        .thirdImages {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            width: 100%;
+        }
+        .thirdImages .valentineImage {
+            max-width: 100%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 15px #ff69b4;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .thirdImages .valentineImage:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px #ff69b4, 0 0 35px #ff1493;
+        }
+
+        /* Message Enhancements: Better text styling */
+        .message p {
+            font-size: 1.2em;
+            line-height: 1.6;
+            text-align: center;
+            text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+            animation: textFadeIn 2s ease-in;
+        }
+        @keyframes textFadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design: Para sa mobile */
+        @media (max-width: 768px) {
+            body {
+                padding: 20px;
+            }
+            h1 {
+                font-size: 2em;
+            }
+            button {
+                font-size: 1em;
+                padding: 12px 20px;
+            }
+            .valentineImage {
+                max-width: 150px;
+            }
+            .surroundImages .valentineImage {
+                max-width: 60px;
+            }
+            .thirdImages {
+                grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            }
+        }
+    </style>
+</head>
+<body>
+    <audio id="memeSound" src="meme4.mp3" preload="auto"></audio>
+    <audio id="yesSound" src="meme5.mp3" preload="auto"></audio>
+    <audio id="bgSound" src="bg1.mp3" preload="auto" loop></audio>
+
+    <div class="heart" style="left: 5%; animation-delay: 0s;">❤️</div>
+    <div class="heart" style="left: 15%; animation-delay: 0.5s;">💖</div>
+    <div class="heart" style="left: 25%; animation-delay: 1s;">💕</div>
+    <div class="heart" style="left: 35%; animation-delay: 1.5s;">❤️</div>
+    <div class="heart" style="left: 45%; animation-delay: 2s;">💖</div>
+    <div class="heart" style="left: 55%; animation-delay: 2.5s;">💕</div>
+    <div class="heart" style="left: 65%; animation-delay: 3s;">❤️</div>
+    <div class="heart" style="left: 75%; animation-delay: 3.5s;">💖</div>
+    <div class="heart" style="left: 85%; animation-delay: 4s;">💕</div>
+    <div class="heart" style="left: 95%; animation-delay: 4.5s;">❤️</div>
+    <div class="heart" style="left: 10%; animation-delay: 5s;">💖</div>
+    <div class="heart" style="left: 20%; animation-delay: 5.5s;">💕</div>
+    <div class="heart" style="left: 30%; animation-delay: 6s;">❤️</div>
+    <div class="heart" style="left: 40%; animation-delay: 6.5s;">💖</div>
+    <div class="heart" style="left: 50%; animation-delay: 7s;">💕</div>
+    <div class="heart" style="left: 60%; animation-delay: 7.5s;">❤️</div>
+    <div class="heart" style="left: 70%; animation-delay: 8s;">💖</div>
+    <div class="heart" style="left: 80%; animation-delay: 8.5s;">💕</div>
+    <div class="heart" style="left: 90%; animation-delay: 9s;">❤️</div>
+
+    <div id="firstPage">
+        <h1>valentines message for my lovelove!💖</h1>
+        <p>wanna be my valentines baby??💖😍</p>
+        <div class="imageContainer">
+            <img class="valentineImage" src="cat1.jpg" alt="Valentine's Day Image 1 on First Page">
+            <img class="valentineImage" src="cat2.jpg" alt="Valentine's Day Image 2 on First Page">
+        </div>
+        <button id="yesBtn">yes! 😍</button>
+        <button id="noBtn">no 😒</button>
+        <div id="yayMessage">yayyyyy!! i knew it mag yyes ikaw eheehe loveuuu!!😍😍 🎉</div>
+    </div>
+
+    <div id="nextPage">
+        <div class="nextPageLayout">
+            <div class="topRow">
+                <div class="surroundImages">
+                    <img class="valentineImage" src="baby1.jpg" alt="Valentine's Day Image 1">
+                    <img class="valentineImage" src="baby2.jpg" alt="Valentine's Day Image 2">
+                    <img class="valentineImage" src="baby3.jpg" alt="Valentine's Day Image 3">
+                </div>
+                <div class="message">
+                    <h1>YAYYYY HAPPY VALENTINES MY MALDITAAAA!!!❤️</h1>
+                    <p>thank you so much babyyy kasi kahit ganyan ka, kahit ganto ako, nandyan ka pa rin palagi para sakin. sobra kitang naaappreciate sa lahat ng pag-intindi mo, sa patience mo, at sa love na binibigay mo kahit minsan ang hirap kong intindihin. pasensya na talaga baby sa mga pagkukulang ko at sa mga times na nasasaktan kita, hindi ko man laging nasasabi pero sobrang thankful ako na ikaw yung kasama ko.
+
+happy valentine’s day baby!! sana magtagal pa tayo, sana malagpasan natin lahat ng challenges na darating, at sana mas lalo pa tayong maging strong together. i promise na mas pagbubutihin ko pa, mas aalagaan pa kita at yung relationship natin.
+
+i love you so much babyyy, forever na sana tayo ❤️
+</p>
+                </div>
+                <div class="surroundImages">
+                    <img class="valentineImage" src="baby4.jpg" alt="Valentine's Day Image 4">
+                    <img class="valentineImage" src="baby5.jpg" alt="Valentine's Day Image 5">
+                    <img class="valentineImage" src="baby6.jpg
